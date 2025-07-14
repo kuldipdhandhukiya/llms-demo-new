@@ -1,0 +1,12 @@
+/* Make Polaris Spinner white in Sync Now button */
+.Polaris-Spinner svg {
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+/* Force Polaris Spinner to white (SVG and all children) */
+.Polaris-Spinner__Svg, .Polaris-Spinner__Svg * {
+  fill: #fff !important;
+  stroke: #fff !important;
+  color: #fff !important;
+} 

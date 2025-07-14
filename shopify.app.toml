@@ -1,0 +1,34 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "49976f9ee381cdae9ebfa73cfd86291e"
+name = "llms-demo"
+handle = "llms-demo"
+application_url = "https://boxed-sonic-told-proposition.trycloudflare.com"
+embedded = true
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2025-07"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,read_product_listings,read_online_store_pages,read_content"
+
+
+
+[auth]
+redirect_urls = ["https://boxed-sonic-told-proposition.trycloudflare.com/auth/callback", "https://boxed-sonic-told-proposition.trycloudflare.com/auth/shopify/callback", "https://boxed-sonic-told-proposition.trycloudflare.com/api/auth/callback"]
+
+[pos]
+embedded = false
