@@ -2,7 +2,7 @@
   "name": "llms-demo",
   "private": true,
   "scripts": {
-    "build": "npx remix vite:build",
+    "build": "npx remix build",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
