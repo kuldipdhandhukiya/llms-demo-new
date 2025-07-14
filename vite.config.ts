@@ -3,11 +3,7 @@ import { installGlobals } from "@remix-run/node";
 import { defineConfig, type UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import json from '@rollup/plugin-json';
-// ...
-plugins: [
-  // ...other plugins
-  json(),
-]
+
 installGlobals({ nativeFetch: true });
 
 // Related: https://github.com/remix-run/remix/issues/2835#issuecomment-1144102176
@@ -68,6 +64,7 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
+    json(),
   ],
   build: {
     assetsInlineLimit: 0,
