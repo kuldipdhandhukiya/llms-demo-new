@@ -10,4 +10,10 @@ module.exports = {
   globals: {
     shopify: "readonly"
   },
+  define: {
+    global: 'globalThis',
+    module: '{}',
+    exports: '{}',
+    require: 'undefined',
+  },
 };

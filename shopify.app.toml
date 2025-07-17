@@ -3,32 +3,30 @@
 client_id = "49976f9ee381cdae9ebfa73cfd86291e"
 name = "llms-demo"
 handle = "llms-demo"
-application_url = "https://boxed-sonic-told-proposition.trycloudflare.com"
+application_url = "https://rhythm-quite-success-enclosed.trycloudflare.com"
 embedded = true
 
 [build]
-include_config_on_deploy = true
 automatically_update_urls_on_dev = true
+include_config_on_deploy = true
 
 [webhooks]
 api_version = "2025-07"
 
   [[webhooks.subscriptions]]
-  topics = [ "app/uninstalled" ]
-  uri = "/webhooks/app/uninstalled"
+  topics = [ "app/scopes_update" ]
+  uri = "https://arrested-gathering-marketplace-k.trycloudflare.com/webhooks/app/scopes_update"
 
   [[webhooks.subscriptions]]
-  topics = [ "app/scopes_update" ]
-  uri = "/webhooks/app/scopes_update"
+  topics = [ "app/uninstalled" ]
+  uri = "https://arrested-gathering-marketplace-k.trycloudflare.com/webhooks/app/uninstalled"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_products,read_product_listings,read_online_store_pages,read_content"
-
-
+scopes = "read_content,read_online_store_pages,read_product_listings,read_products"
 
 [auth]
-redirect_urls = ["https://boxed-sonic-told-proposition.trycloudflare.com/auth/callback", "https://boxed-sonic-told-proposition.trycloudflare.com/auth/shopify/callback", "https://boxed-sonic-told-proposition.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://rhythm-quite-success-enclosed.trycloudflare.com/auth/callback", "https://rhythm-quite-success-enclosed.trycloudflare.com/auth/shopify/callback", "https://rhythm-quite-success-enclosed.trycloudflare.com/api/auth/callback"]
 
 [pos]
 embedded = false

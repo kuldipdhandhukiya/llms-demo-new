@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from "@remix-run/react";
 import { useEffect } from "react";
 import { Page, Layout, Card, Text, Button } from "@shopify/polaris";
 

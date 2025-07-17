@@ -1,6 +1,6 @@
 import { Card, Text } from '@shopify/polaris';
 import { Box, Package, FileText, BookText } from 'lucide-react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 type IconType = 'products' | 'collections' | 'pages' | 'blog-posts';
 

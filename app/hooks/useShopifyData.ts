@@ -76,7 +76,7 @@ export function useShopifyData() {
     }
     await fetchData();
     setSetupInProgress(false);
-  }, [fetchData]);
+  }, [fetchData, toast]);
 
   // Initialize data only once on mount
   useEffect(() => {
@@ -133,7 +133,7 @@ export function useShopifyData() {
         setBlogPosts(data.blogPosts || []);
       }
     })();
-  }, [fetchData]);
+  }, [fetchData, toast]);
 
   return {
     products,

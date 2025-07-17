@@ -51,6 +51,11 @@ export default defineConfig({
       allow: ["app", "node_modules"],
     },
   },
+  resolve: {
+    alias: {
+      assert: "assert",
+    },
+  },
   plugins: [
     remix({
       ignoredRouteFiles: ["**/.*"],
