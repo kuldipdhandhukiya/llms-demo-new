@@ -1,61 +1,41 @@
 import { json } from "@remix-run/node";
 import type { ActionFunctionArgs } from "@remix-run/node";
-import { authenticate, sessionStorage } from "~/shopify.server";
-import { syncAllShopifyData } from "~/lib/shopify-api.server";
+import { authenticate } from "~/shopify.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const { session } = await authenticate.admin(request);
   if (!session || !session.shop) {
     return json({ error: "No active session found" }, { status: 401 });
   }
+
   const shop = session.shop;
-  const accessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-  const sessionAccessToken = session.accessToken;
-  const sessionId = session.id;
+  const accessToken = session.accessToken;
+  const apiVersion = "2023-10"; // or your preferred version
 
-  if (!accessToken) {
-    return json({ error: "No Storefront access token found" }, { status: 401 });
+  // Helper to fetch count from REST endpoint
+  async function fetchCount(endpoint: string) {
+    const url = `https://${shop}/admin/api/${apiVersion}/${endpoint}`;
+    const res = await fetch(url, {
+      headers: {
+        "X-Shopify-Access-Token": accessToken,
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    return data.count || 0;
   }
-  if (!sessionAccessToken) {
-    return json({ error: "No Admin access token found" }, { status: 401 });
-  }
 
-  // Reset progress and error
-  session.productSyncProgress = { resource: 'products', fetched: 0, total: 0 };
-  session.productSyncError = null;
-  await sessionStorage.storeSession(session);
+  const productCount = await fetchCount("products/count.json");
+  const collectionCount = await fetchCount("custom_collections/count.json");
+  const pageCount = await fetchCount("pages/count.json");
+  const blogPostCount = await fetchCount("blogs/count.json");
+  console.log("test", productCount);
+  console.log({ productCount, collectionCount, pageCount, blogPostCount });
 
-  // Start sync in background (fire and forget)
-  (async () => {
-    try {
-      await syncAllShopifyData({
-        shop,
-        accessToken,
-        sessionAccessToken,
-        onProgress: async (progress) => {
-          const s = await sessionStorage.loadSession(sessionId);
-          if (s) {
-            s.productSyncProgress = progress;
-            s.productSyncError = null;
-            await sessionStorage.storeSession(s);
-          }
-        },
-        onError: async (error) => {
-          const s = await sessionStorage.loadSession(sessionId);
-          if (s) {
-            s.productSyncError = error;
-            await sessionStorage.storeSession(s);
-          }
-        },
-      });
-    } catch (error: any) {
-      const s = await sessionStorage.loadSession(sessionId);
-      if (s) {
-        s.productSyncError = error?.message || 'Unknown sync error';
-        await sessionStorage.storeSession(s);
-      }
-    }
-  })();
-
-  return json({ started: true }, { status: 202 });
-}; 
+  return json({
+    productCount,
+    collectionCount,
+    pageCount,
+    blogPostCount,
+  });
+};

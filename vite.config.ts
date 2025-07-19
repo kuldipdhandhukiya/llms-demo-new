@@ -2,7 +2,6 @@ import { vitePlugin as remix } from "@remix-run/dev";
 import { installGlobals } from "@remix-run/node";
 import { defineConfig, type UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import json from '@rollup/plugin-json';
 
 installGlobals({ nativeFetch: true });
 
@@ -51,11 +50,6 @@ export default defineConfig({
       allow: ["app", "node_modules"],
     },
   },
-  resolve: {
-    alias: {
-      assert: "assert",
-    },
-  },
   plugins: [
     remix({
       ignoredRouteFiles: ["**/.*"],
@@ -69,12 +63,25 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
-    json(),
   ],
   build: {
     assetsInlineLimit: 0,
   },
   optimizeDeps: {
     include: ["@shopify/app-bridge-react", "@shopify/polaris"],
+  },
+  resolve: {
+    alias: {
+      assert: 'assert',
+      // add more if needed
+    },
+  },
+  ssr: {
+    noExternal: [
+      '@shopify/shopify-api',
+      '@shopify/shopify-app-remix',
+      '@shopify/shopify-app-session-storage-prisma',
+      // add any other packages that use Node.js built-ins
+    ],
   },
 }) satisfies UserConfig;

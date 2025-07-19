@@ -48,9 +48,23 @@ function useProductSyncProgress() {
 
 interface DashboardProps {
   shop: string;
+  productCount?: number;
+  collectionCount?: number;
+  pageCount?: number;
+  blogPostCount?: number;
+  isFetching?: boolean;
 }
 
-const MainDashboard = ({ shop }: DashboardProps) => {
+const MainDashboard = ({ shop, productCount, collectionCount, pageCount, blogPostCount, isFetching }: DashboardProps) => {
+  console.log("testing", productCount);
+  console.log(
+    { 
+      productCount, 
+      collectionCount, 
+      pageCount, 
+      blogPostCount 
+    });
+
   const {
     products,
     collections,
@@ -118,12 +132,42 @@ const MainDashboard = ({ shop }: DashboardProps) => {
     });
   };
 
-  console.log({ isLoading, isSetupInProgress, products, collections: safeCollections, pages: safePages, blogPosts: safeBlogPosts });
-
+  // console.log({ isLoading, isSetupInProgress, products, collections: safeCollections, pages: safePages, blogPosts: safeBlogPosts });
+  console.log({ isLoading, isSetupInProgress, productCount, collectionCount, pageCount, blogPostCount });
   return (
     <Page
       title="llms.txt Generator AI Search"
     >
+      {/* Live Shopify Counts and Fetching Status */}
+      {(typeof productCount === 'number' || typeof collectionCount === 'number' || typeof pageCount === 'number' || typeof blogPostCount === 'number') && (
+        <div style={{ padding: '16px', textAlign: 'center' }}>
+          {typeof productCount === 'number' && (
+            <Text variant="headingMd" as="span">
+              Products: {productCount}
+            </Text>
+          )}
+          {typeof collectionCount === 'number' && (
+            <><span style={{ margin: '0 8px' }}></span><Text variant="headingMd" as="span">
+              Collections: {collectionCount}
+            </Text></>
+          )}
+          {typeof pageCount === 'number' && (
+            <><span style={{ margin: '0 8px' }}></span><Text variant="headingMd" as="span">
+              Pages: {pageCount}
+            </Text></>
+          )}
+          {typeof blogPostCount === 'number' && (
+            <><span style={{ margin: '0 8px' }}></span><Text variant="headingMd" as="span">
+              Blog Posts: {blogPostCount}
+            </Text></>
+          )}
+          {isFetching && (
+            <span style={{ marginLeft: 12, color: '#888', fontSize: '14px' }}>
+              (Fetching...)
+            </span>
+          )}
+        </div>
+      )}
       <Layout>
         {/* Generate llms.txt Button */}
         <Layout.Section>
@@ -204,26 +248,26 @@ const MainDashboard = ({ shop }: DashboardProps) => {
                   <ContentSection
                     icon="products"
                     title="Products"
-                    count={products.length}
-                    description={`${products.length} products found and added`}
+                    count={typeof productCount === 'number' ? productCount : products.length}
+                    description={`${typeof productCount === 'number' ? productCount : products.length} products found and added`}
                   />
                   <ContentSection
                     icon="collections"
                     title="Collections"
-                    count={safeCollections.length}
-                    description={`${safeCollections.length} collections found and added`}
+                    count={typeof collectionCount === 'number' ? collectionCount : safeCollections.length}
+                    description={`${typeof collectionCount === 'number' ? collectionCount : safeCollections.length} collections found and added`}
                   />
                   <ContentSection
                     icon="pages"
                     title="Pages"
-                    count={safePages.length}
-                    description={`${safePages.length} pages found and added`}
+                    count={typeof pageCount === 'number' ? pageCount : safePages.length}
+                    description={`${typeof pageCount === 'number' ? pageCount : safePages.length} pages found and added`}
                   />
                   <ContentSection
                     icon="blog-posts"
                     title="Blog Posts"
-                    count={safeBlogPosts.length}
-                    description={`${safeBlogPosts.length} articles found and added`}
+                    count={typeof blogPostCount === 'number' ? blogPostCount : safeBlogPosts.length}
+                    description={`${typeof blogPostCount === 'number' ? blogPostCount : safeBlogPosts.length} articles found and added`}
                   />
                 </div>
               </div>
@@ -247,4 +291,4 @@ const MainDashboard = ({ shop }: DashboardProps) => {
   );
 };
 
-export default MainDashboard;
+export default MainDashboard; 

@@ -54,16 +54,16 @@ export async function syncAllShopifyData({
   accessToken: string; // Storefront API token
   sessionAccessToken: string; // Admin API token
 }) {
-  if (!accessToken) {
-    await onError('Storefront access token is required for sync');
-    return;
+  const STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || process.env.SHOPIFY_STOREFRONT_API_TOKEN;
+  if (!STOREFRONT_TOKEN) {
+    throw new Error("No Storefront access token found");
   }
   if (!sessionAccessToken) {
     await onError('Admin access token is required for blog post sync');
     return;
   }
 
-  const client = await shopifyStorefrontApiClient(shop, accessToken);
+  const client = await shopifyStorefrontApiClient(shop, STOREFRONT_TOKEN);
   const adminClient = await shopifyAdminApiClient(shop, sessionAccessToken);
   const DELAY_MS = 700;
 

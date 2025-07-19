@@ -3,7 +3,7 @@
 client_id = "49976f9ee381cdae9ebfa73cfd86291e"
 name = "llms-demo"
 handle = "llms-demo"
-application_url = "https://rhythm-quite-success-enclosed.trycloudflare.com"
+application_url = "https://investigate-protected-eve-turner.trycloudflare.com"
 embedded = true
 
 [build]
@@ -26,7 +26,7 @@ api_version = "2025-07"
 scopes = "read_content,read_online_store_pages,read_product_listings,read_products"
 
 [auth]
-redirect_urls = ["https://rhythm-quite-success-enclosed.trycloudflare.com/auth/callback", "https://rhythm-quite-success-enclosed.trycloudflare.com/auth/shopify/callback", "https://rhythm-quite-success-enclosed.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://investigate-protected-eve-turner.trycloudflare.com/auth/callback", "https://investigate-protected-eve-turner.trycloudflare.com/auth/shopify/callback", "https://investigate-protected-eve-turner.trycloudflare.com/api/auth/callback"]
 
 [pos]
 embedded = false

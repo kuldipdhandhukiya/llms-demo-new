@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { Page, Layout, Card, Text, Button, TextField, BlockStack, List } from "@shopify/polaris";
 
@@ -12,8 +13,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     throw redirect(`/app?${url.searchParams.toString()}`);
   }
 
-  return { showForm: Boolean(login) };
 };
+console.log("loader");
 
 export default function App() {
   const { showForm } = useLoaderData<typeof loader>();
